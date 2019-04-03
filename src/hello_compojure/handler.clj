@@ -16,7 +16,7 @@
   (str "<a href=\"/" (:username user) "\">" (full-name user) "</a>"))
 
 (defroutes app-routes
-  (GET "/" [] (apply str (string/join "<br />" (map user-link users))))
+  (GET "/" [] (str (string/join "<br />" (map user-link users))))
   (GET "/:username" [username] (str username))
   (route/not-found "Not Found"))
 
