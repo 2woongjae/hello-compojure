@@ -3,7 +3,7 @@
             [compojure.route :as route]
             [clojure.data.json :as json]
             [clojure.string :as string]
-            [hiccup.core :as hiccup]
+            [hiccup.page :as hiccup]
             [selmer.parser :as selmer]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]))
 
@@ -24,7 +24,7 @@
 (defroutes app-routes
   (GET "/" [] (str (string/join "<br />" (map user-link users))))
   (GET "/hiccup" []
-    (hiccup/html
+    (hiccup/html5
       [:html {:lang "en"}
        [:head
         [:meta {:charset "UTF-8"}]
