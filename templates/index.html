@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>User Index</title>
+  </head>
+  <body>
+    <h1>selmer</h1>
+
+    <ul>
+      {% for user in users %}
+      <li><a href="/{{user.username}}">{{user.full-name}}</a></li>
+      {% endfor %}
+    </ul>
+
+  </body>
+</html>
