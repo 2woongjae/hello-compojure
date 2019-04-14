@@ -5,6 +5,10 @@
             [clojure.string :as string]
             [hiccup.page :as hiccup]
             [selmer.parser :as selmer]
+            [ring.middleware.file :refer :all]
+            [ring.middleware.resource :refer :all]
+            [ring.middleware.content-type :refer :all]
+            [ring.middleware.not-modified :refer :all]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]))
 
 (def users (json/read-str (slurp "users.json") :key-fn keyword))
@@ -38,5 +42,23 @@
   (GET "/:username" [username] (str username))
   (route/not-found "Not Found"))
 
-(def app
-  (wrap-defaults app-routes site-defaults))
+(def app 
+  (wrap-file (wrap-defaults app-routes site-defaults) "images"))
+
+;(def app 
+;  (wrap-not-modified
+;    (wrap-content-type
+;      (wrap-file (wrap-defaults app-routes site-defaults) "images"))))
+
+;(def app 
+;  (wrap-resource (wrap-defaults app-routes site-defaults) "public"))
+
+;(def app 
+;  (wrap-not-modified
+;    (wrap-content-type
+;      (wrap-resource (wrap-defaults app-routes site-defaults) "images"))))
+; content-type
+; wrap-content-type 미들웨어는 파일 확장자를 보고 content-type을 골라준다.
+; Last-Modified
+; wrap-not-modified 미들웨어는 응답에 있는 Last-Modified 헤더를 요청의 If-Modified-Since 헤더와 비교한다.
+; 이렇게 하면, 클라이언트에게 이미 캐싱된 리소스를 보내지 않으므로, 네트워크 대역폭이 절약된다.
