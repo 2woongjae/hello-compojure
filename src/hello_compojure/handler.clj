@@ -39,7 +39,11 @@
     )
   )
   (GET "/selmer" [] (selmer/render-file "index.html" {:users (map get-user users)}))
-  (context "/profilepics" [] (wrap-file (route/not-found "File Not Found") "images"))
+  (context "/profilepics" [] 
+    (-> (route/not-found "File Not Found")
+        (wrap-file "images")
+        wrap-content-type
+        wrap-not-modified))
   (GET "/:username" [username] (selmer/render-file "user.html" {:username username}))
   (route/not-found "Not Found"))
 
