@@ -1,17 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>User Index</title>
-  </head>
-  <body>
-    <h1>selmer</h1>
 
-    <ul>
-      {% for user in users %}
-      <li><a href="/{{user.username}}">{{user.full-name}}</a></li>
-      {% endfor %}
-    </ul>
+<head>
+  <meta charset="UTF-8" />
+  <title>User Index</title>
+  <style>
+    * {
+      font-family: Helvetica, Arial, sans-serif;
+    }
 
-  </body>
+    div {
+      display: flex;
+      align-items: center;
+      padding: 1em;
+      font-size: 1.2em;
+    }
+
+    div a {
+      padding-left: 0.5em;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>selmer</h1>
+
+  {% for user in users %}
+  <div>
+    <img src="/profilepics/{{ user.username }}_sm.jpg" alt="" />
+    <a href="/{{ user.username }}">{{ user.full-name }}</a>
+  </div>
+  {% endfor %}
+</body>
+
 </html>
